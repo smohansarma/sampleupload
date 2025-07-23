@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Candidate Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            margin: 20px;
+        }
+        h2 {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+        }
+        th, td {
+            text-align: left;
+            padding: 6px;
+            border: 1px solid #999;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+        th {
+            background-color: #f0f0f0;
+            width: 35%;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Page 1: Candidate Details -->
+<div>
+    <h2>Candidate Details</h2>
+    <a href="{% url 'exam:download_emp_detail_pdf' emp.id %}" class="btn btn-primary">Download PDF</a>
+    <table>
+      <tr><th>Name</th><td>{{ emp.name }}</td></tr>
+      <tr><th>Phone Number</th><td>{{ emp.number }}</td></tr>
+      <tr><th>Date of Birth</th><td>{{ emp.dob }}</td></tr>
+      <tr><th>Gender</th><td>{{ emp.gender }}</td></tr>
+      <tr><th>Marital Status</th><td>{{ emp.marital_status }}</td></tr>
+      <tr><th>Nationality</th><td>{{ emp.nationality }}</td></tr>
+      <tr><th>Blood Group</th><td>{{ emp.blood_group }}</td></tr>
+      <tr><th>Position Applied</th><td>{{ emp.position_applied }}</td></tr>
+      <tr><th>Department</th><td>{{ emp.department }}</td></tr>
+      <tr><th>Highest Qualification</th><td>{{ emp.highest_qualification }}</td></tr>
+      <tr><th>Year of Graduation</th><td>{{ emp.year_of_graduation }}</td></tr>
+      <tr><th>Current Employer</th><td>{{ emp.current_employer }}</td></tr>
+      <tr><th>Total Experience</th><td>{{ emp.total_experience }}</td></tr>
+      <tr><th>Relevant Experience</th><td>{{ emp.relevant_experience }}</td></tr>
+      <tr><th>Skills </th><td>{{ emp.skills_certifications }}</td></tr>
+      <tr><th>Highest Degree Type</th><td>{{ emp.highest_degree_type }}</td></tr>
+      <tr><th>Test Topic</th><td>{{ emp.topic }}</td></tr>
+      <tr><th>Score</th><td>{{ emp.score }}</td></tr>
+      <tr><th>Technical Score</th><td>{{ emp.tech_score }}</td></tr>
+      <tr><th>Resume</th><td><a href="{{ emp.resume_upload.url }}" download>Download Resume</a></td></tr>
+      <tr><th>Applied On</th><td>{{ emp.created_at }}</td></tr>
+    </table>
+</div>
+
+<!-- Page Break -->
+<div class="page-break"></div>
+
+<!-- Page 2: Aptitude -->
+<div>
+    <h2>Aptitude Test Result</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Q.No</th>
+                <th>Question</th>
+                <th>Options</th>
+                <th>Correct</th>
+                <th>Selected</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in at %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ data.q1|truncatechars:100 }}</td>
+                <td>
+                    {{ data.o1|truncatechars:30 }}<br/>
+                    {{ data.o2|truncatechars:30 }}<br/>
+                    {{ data.o3|truncatechars:30 }}<br/>
+                    {{ data.o4|truncatechars:30 }}
+                </td>
+                <td>{{ data.a1 }}</td>
+                <td>{{ data.s1 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Page Break -->
+<div class="page-break"></div>
+
+<!-- Page 3: Technical -->
+<div>
+    <h2>{{ emp.topic|capfirst }} Test Result</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Q.No</th>
+                <th>Question</th>
+                <th>Options</th>
+                <th>Correct</th>
+                <th>Selected</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in tt %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ data.q1|truncatechars:100 }}</td>
+                <td>
+                    {{ data.o1|truncatechars:30 }}<br/>
+                    {{ data.o2|truncatechars:30 }}<br/>
+                    {{ data.o3|truncatechars:30 }}<br/>
+                    {{ data.o4|truncatechars:30 }}
+                </td>
+                <td>{{ data.a1 }}</td>
+                <td>{{ data.s1 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

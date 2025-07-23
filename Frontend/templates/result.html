@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vienstereoptic: View Questions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #b624e0;
+      --secondary: #ff5ca2;
+      --bg1: #e6ccff;
+      --bg2: #ffe0f0;
+      --text-color: #2c003e;
+      --card-bg: rgba(255, 255, 255, 0.25);
+      --card-border: 1px solid rgba(255, 255, 255, 0.4);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Urbanist', sans-serif;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2), #ffcce0);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    {% comment %} @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    } {% endcomment %}
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .company {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 5px;
+      letter-spacing: 1.2px;
+    }
+
+    .title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .main-content {
+      width: 100%;
+      backdrop-filter: blur(14px);
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      border: var(--card-border);
+    }
+
+    .main-content h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .question-card {
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .question-card h3 {
+      font-size: 1.3rem;
+      color: var(--text-color);
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+
+    .options-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .options-list li {
+      margin-bottom: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      color: #333;
+      font-size: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px; /* Space between radio button and text */
+    }
+
+    .options-list input[type="radio"] {
+        margin-top: 5px; /* Align radio button with text */
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 0.9rem;
+      color: #4a004a;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 15px;
+      }
+      .main-content {
+        padding: 20px;
+      }
+      .main-content h2 {
+        font-size: 1.8rem;
+      }
+      .question-card {
+        padding: 15px;
+      }
+      .question-card h3 {
+        font-size: 1.1rem;
+      }
+      .options-list li {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <div class="company">Vienstereoptic</div>
+
+    <main class="main-content">
+      <h1>Candidate Name : {{ emp_name }}</h1>
+      <h2>{{name}} Test Result</h2>
+      <a href="{% url 'exam:download_candidates_pdf' candidate_id=candidate_id date=date test_type=name|urlencode %}" class="btn view-candidate-btn">Download PDF</a>
+
+
+      <div class="question-card">
+        {%for data in datas%}
+        <h3><strong>Question {{ forloop.counter }} :</strong>{{ item.question }}
+{{data.q1}}</h3>
+        <ul class="options-list">
+          <li>{{data.o1}}</li>
+          <li>{{data.o2}}</li>
+          <li>{{data.o3}}</li>
+          <li>{{data.o4}}</li>
+          <li>Correct Answer : {{data.a1}}</li>
+          <li>Selected Answer :{{data.s1}}
+
+
+
+
+        
+        </ul>
+        {%endfor%}
+      </div>
+
+      
+
+    </main>
+  </div>
+
+  <footer>
+    © 2025 Vienstereoptic. All rights reserved.
+  </footer>
+
+</body>
+</html>

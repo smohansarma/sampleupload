@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{ name }} Test Result</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 9px;
+      margin: 10px;
+      color: #000;
+      line-height: 1.2;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin: 4px 0;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      table-layout: fixed;
+      word-wrap: break-word;
+      font-size: 8.5px;
+    }
+
+    th, td {
+      border: 0.5px solid #000;
+      padding: 3px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background-color: #e0e0e0;
+    }
+
+    td:nth-child(2) {
+      width: 35%;
+    }
+
+    td:nth-child(3) {
+      width: 30%;
+    }
+
+    td:nth-child(4), td:nth-child(5) {
+      width: 12%;
+    }
+
+    /* Prevent page breaking */
+    table, tr, td, th {
+      page-break-inside: avoid;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Candidate: {{ name }}</h1>
+  <h2>{{ test_type }} Test Result</h2>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Q.No</th>
+          <th>Question</th>
+          <th>Options</th>
+          <th>Correct</th>
+          <th>Selected</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for data in datas %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ data.q1|truncatechars:100 }}</td>
+          <td>
+            1. {{ data.o1|truncatechars:30 }}<br/>
+            2. {{ data.o2|truncatechars:30 }}<br/>
+            3. {{ data.o3|truncatechars:30 }}<br/>
+            4. {{ data.o4|truncatechars:30 }}
+          </td>
+          <td>{{ data.a1 }}</td>
+          <td>{{ data.s1 }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

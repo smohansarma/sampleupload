@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vienstereoptic Admin: Candidates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #b624e0;
+      --secondary: #ff5ca2;
+      --bg1: #e6ccff;
+      --bg2: #ffe0f0;
+      --text-color: #2c003e;
+      --card-bg: rgba(255, 255, 255, 0.25);
+      --card-border: 1px solid rgba(255, 255, 255, 0.4);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --input-border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Urbanist', sans-serif;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2), #ffcce0);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1000px; /* Adjusted max-width for simpler layout */
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .company {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--secondary);
+      margin-bottom: 5px;
+      letter-spacing: 1.2px;
+    }
+
+    .title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* Main content takes full width as there's no sidebar */
+    .main-panel {
+      width: 100%; /* Ensure it takes available width */
+      backdrop-filter: blur(14px);
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      border: var(--card-border);
+    }
+
+    .main-panel h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .section-content {
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .section-content h3 {
+      color: var(--primary);
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #4d004d;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="number"],
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: var(--input-border);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--text-color);
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    .btn {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-secondary {
+        background: rgba(100, 100, 100, 0.7);
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 10px;
+      overflow: hidden; /* Ensures rounded corners */
+    }
+
+    table th, table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      color: var(--text-color);
+    }
+
+    table th {
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+    }
+
+    table tr:last-child td {
+      border-bottom: none;
+    }
+
+    table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 0.9rem;
+      color: #4a004a;
+      text-align: center;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .main-panel {
+        padding: 20px;
+      }
+      .title {
+        font-size: 1.8rem;
+      }
+      .main-panel h2 {
+        font-size: 1.6rem;
+      }
+      .btn {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      .btn:last-child {
+        margin-right: 0; /* No margin on the last button when stacked */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <div class="company">Vienstereoptic</div>
+      <div class="title">Candidate Management</div>
+    </div>
+
+    <main class="main-panel">
+      <div id="candidate-list-section" class="section-display">
+        <h2>All Candidates</h2>
+        <div class="section-content">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  {% comment %} <th>Candidate ID</th> {% endcomment %}
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Mobile Number</th>
+                  <th>Aptitude</th>
+                  <th>Aptitude Result</th>
+                  <th>Tech Name</th>
+                  <th>Tech Mark</th>
+                  <th>Technical Result</td>
+                  <th>HR Page</th>
+                  <th>Client Page</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%for data in datas%}
+                <tr>
+                  {% comment %} <td>{{data.id}}</td> {% endcomment %}
+                  <td>{{data.name}}</td>
+                  <td>{{data.number}}</td>
+                  <td>{{data.score}}</td>
+                  <td><a href="{%url 'exam:result' id=data.id date=data.created_at topic='aptitude'%}" class='btn view-candidate-btn'>View</a> 
+                  </td>
+                  <td>{{data.topic}}</td>
+                  <td>{{data.tech_score}}</td>
+                  <td>{{data.created_at}}</td>
+                  <td><a href="{%url 'exam:result' id=data.id date=data.created_at topic=data.topic%}" class='btn view-candidate-btn'>View</a> 
+                  </td>
+                  <td><a href="{%url 'exam:emp_detail' emp_id=data.id%}" class='btn view-candidate-btn>Details'>For Hr</a></td>
+                  <td><a href="{%url 'exam:emp_detail_client' emp_id=data.id%}" class='btn view-candidate-btn>Details'>For Client</a></td>
+                </tr>
+                {%endfor%}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      {% comment %} <div id="candidate-detail-section" class="section-display" style="display: none;">
+        <h2>Candidate Profile: <span id="candidate-name-display"></span></h2>
+        <div class="section-content">
+          <h3>Personal Information</h3>
+          <p><strong>ID:</strong> <span id="detail-candidate-id"></span></p>
+          <p><strong>Name:</strong> <span id="detail-candidate-name"></span></p>
+          <p><strong>Email:</strong> <span id="detail-candidate-email"></span></p>
+          <p><strong>Phone:</strong> <span id="detail-candidate-phone">N/A</span></p>
+        </div>
+
+        <div class="section-content">
+          <h3>Application & Test Information</h3>
+          <p><strong>Applied For:</strong> <span id="detail-applied-for"></span></p>
+          <p><strong>Application Date:</strong> <span id="detail-application-date"></span></p>
+          <p><strong>Test Status:</strong> <span id="detail-test-status"></span></p>
+          <p><strong>Test Score:</strong> <span id="detail-test-score">N/A</span></p>
+          <p><strong>Feedback:</strong> <span id="detail-feedback">No feedback yet.</span></p>
+        </div> {% endcomment %}
+
+       
+      </div>
+
+    </main>
+  </div>
+
+  <footer>
+    © 2025 Vienstereoptic. All rights reserved.
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sections = document.querySelectorAll('.section-display');
+      const viewCandidateButtons = document.querySelectorAll('.view-candidate-btn');
+
+      // Function to show a specific section and hide others
+      function showSection(sectionId) {
+        sections.forEach(section => section.style.display = 'none');
+        const targetSection = document.getElementById(sectionId + '-section');
+        if (targetSection) {
+          targetSection.style.display = 'block';
+        }
+      }
+
+      // Initialize by showing the candidate list
+      showSection('candidate-list');
+
+      // Dummy Candidate Data (in a real app, this would come from your backend)
+      const candidateData = {
+        'C001': {
+          name: 'Alice Johnson',
+          email: 'alice.j@example.com',
+          phone: '+91-9876543210',
+          resume: 'https://www.africau.edu/images/default/sample.pdf', // Example PDF link
+          appliedFor: 'Developer',
+          applicationDate: '2025-06-05',
+          testStatus: 'Test Completed',
+          testScore: '88%',
+          feedback: 'Strong coding skills, good problem-solving ability. Ready for next round.'
+        },
+        'C002': {
+          name: 'Bob Williams',
+          email: 'bob.w@example.com',
+          phone: '+91-9988776655',
+          resume: 'https://www.africau.edu/images/default/sample.pdf',
+          appliedFor: 'Hardware Engineer',
+          applicationDate: '2025-06-01',
+          testStatus: 'Pending Test',
+          testScore: 'N/A',
+          feedback: 'Awaiting completion of hardware fundamentals test.'
+        },
+        'C003': {
+          name: 'Charlie Davis',
+          email: 'charlie.d@example.com',
+          phone: '+91-9765432109',
+          resume: 'https://www.africau.edu/images/default/sample.pdf',
+          appliedFor: 'Digital Marketing',
+          applicationDate: '2025-06-03',
+          testStatus: 'Interview Scheduled',
+          testScore: '91%',
+          feedback: 'Excellent marketing insights. Interview scheduled for 15th June with Sarah Lee.'
+        },
+        'C004': {
+          name: 'David Lee',
+          email: 'david.l@example.com',
+          phone: '+91-9000112233',
+          resume: 'https://www.africau.edu/images/default/sample.pdf',
+          appliedFor: 'HR & Admin',
+          applicationDate: '2025-06-09',
+          testStatus: 'Application Received',
+          testScore: 'N/A',
+          feedback: 'Resume reviewed, appears promising for HR role.'
+        }
+      };
+
+      // View Candidate Button functionality
+      viewCandidateButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const candidateId = this.dataset.candidateId;
+          const currentCandidate = candidateData[candidateId];
+
+          if (currentCandidate) {
+            document.getElementById('candidate-name-display').textContent = currentCandidate.name;
+            document.getElementById('detail-candidate-id').textContent = candidateId;
+            document.getElementById('detail-candidate-name').textContent = currentCandidate.name;
+            document.getElementById('detail-candidate-email').textContent = currentCandidate.email;
+            document.getElementById('detail-candidate-phone').textContent = currentCandidate.phone;
+            document.getElementById('detail-candidate-resume').href = currentCandidate.resume;
+            document.getElementById('detail-applied-for').textContent = currentCandidate.appliedFor;
+            document.getElementById('detail-application-date').textContent = currentCandidate.applicationDate;
+            document.getElementById('detail-test-status').textContent = currentCandidate.testStatus;
+            document.getElementById('detail-test-score').textContent = currentCandidate.testScore;
+            document.getElementById('detail-feedback').textContent = currentCandidate.feedback;
+
+            showSection('candidate-detail'); // Show the new candidate detail section
+          } else {
+            alert('Candidate details not found!');
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

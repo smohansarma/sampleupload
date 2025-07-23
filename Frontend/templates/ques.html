@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Aptitude </title>
+  <style>
+    :root {
+      --primary: #6a0dad;
+      --secondary: #ff5ca2;
+      --bg-light: #f3e5f5;
+      --text-dark: #2c3e50;
+      --hover: #e0d4f7;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--bg-light), #fff0f6);
+      padding: 2rem;
+      margin: 0;
+      color: var(--text-dark);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 2rem;
+    }
+
+    form {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .question-block {
+      margin-bottom: 2rem;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      background: #fafafa;
+      border: 1px solid #eee;
+    }
+
+    .question-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--primary);
+    }
+
+    .option {
+      background: #f1f1f1;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      margin: 0.3rem 0;
+      transition: background 0.3s ease;
+    }
+
+    .option:hover {
+      background: var(--hover);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 0.8rem;
+    }
+
+    .submit-container {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    input[type="submit"] {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background: linear-gradient(to right, #4e088a, #cc1c78);
+      transform: scale(1.05);
+    }
+
+    .no-items {
+      text-align: center;
+      color: #b30000;
+      font-size: 1.2rem;
+    }
+  </style>
+  <script language='javascript' type='text/javascript'>
+    function DisableBackButton(){
+      window.history.forward()
+    }
+    DisableBackButton();
+    window.onload = DisableBackButton;
+    window.onpageshow = function(evt){ if (evt.persisted) DisableBackButton() }
+    window.onunload = function() { void (0)}
+  </script>
+</head>
+<body>
+
+  <h1>{{name}} </h1>
+
+  <form method="post" action=" ">
+    {% csrf_token %}
+    
+    {% for item in values %}
+      <div class="question-block">
+        <div class="question-text"><strong>Question {{ forloop.counter }} :</strong>{{ item.question }}</div>
+        <div class="option">{{ item.o1 }}</div>
+        <div class="option">{{ item.o2 }}</div>
+        <div class="option">{{ item.o3 }}</div>
+        <div class="option">{{ item.o4 }}</div>
+        <input type="text" name="answer_{{ forloop.counter }}" placeholder="Enter your Option" required>
+      </div>              
+    {% empty %}
+      <p class="no-items">No questions found.</p>
+    {% endfor %}
+
+    <div class="submit-container">
+      <input type="submit" value="Submit All Answers">
+    </div>
+  </form>
+
+</body>
+<script>
+
+    window.onbeforeunload=function(){
+      return "Are You sure";
+    }
+    window.addEventListener('keydown', function(e) {
+  // F5 = 116, Ctrl+R = 82 with CtrlKey pressed
+  if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
+    e.preventDefault();
+    alert("Reload is disabled on this page.");
+  }
+});
+// Push current page state into history
+history.pushState(null, null, location.href);
+
+// When user clicks back, push state again to stay on page
+window.onpopstate = function () {
+  history.pushState(null, null, location.href);
+};
+
+window.addEventListener('beforeunload',)
+
+</script>
+</html>
